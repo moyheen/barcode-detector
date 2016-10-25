@@ -25,6 +25,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.google.android.gms:play-services-vision:9.8.00'
+    compile 'com.google.android.gms:play-services-vision:9.6.1'
     testCompile 'junit:junit:4.12'
 }
