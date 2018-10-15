@@ -18,15 +18,15 @@ private const val ERROR_MESSAGE = "Barcode detector could not be set up on your 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var barcodeBitmap: Bitmap
-    lateinit var textView: TextView
+    private lateinit var barcodeBitmap: Bitmap
+    private lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val imageView = findViewById<View>(R.id.image_view) as ImageView
-        textView = findViewById<View>(R.id.text_view) as TextView
+        val imageView = findViewById<ImageView>(R.id.image_view)
+        textView = findViewById(R.id.text_view)
 
         barcodeBitmap = BitmapFactory.decodeResource(resources, R.drawable.images)
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                                              .setBarcodeFormats(Barcode.ALL_FORMATS)
                                              .build()
 
-        if (!barcodeDetector.isOperational) {
+        if (barcodeDetector.isOperational.not()) {
             AlertDialog.Builder(this)
                        .setMessage(ERROR_MESSAGE)
                        .show()
@@ -48,16 +48,16 @@ class MainActivity : AppCompatActivity() {
 
             val size = barcode.size()
 
-            if (size == 0) {
-                textView.text = NO_INFO
+            textView.text = if (size == 0) {
+                NO_INFO
             } else {
                 var barcodeValue = EMPTY_STRING
 
                 for (i in 0 until size) {
                     barcodeValue += "${barcode.valueAt(i).displayValue}\n"
-
                 }
-                textView.text = barcodeValue
+
+                barcodeValue
             }
         }
 
